@@ -12,7 +12,7 @@
 % performance.
 clear
 close all
-
+load('hashTable.mat', 'hashTable')
 % Ask two NetIDs of Shazam project that is being tested
 prompt = 'What are the NetIDs? Please enter in form of: cw733_kjj34\n==> ';
 netId = input(prompt,'s');
@@ -27,15 +27,15 @@ correct = {};% Array for saving names of a song that identified correctly
 incorrect = {};% Array for saving names of a song that identified incorrectly
 
 % Read files in directory "clipGaussian/"
-files = what('partITestDatabase');
+files = what('songDatabase');
 matFiles = files.mat;
 
 % Perform Shazam on 20 test clips
 % for index = 1:length(matFiles)
-for index = 1:1
+for index = 1:50
     fileName = matFiles{index};% Name of the test clip
-    toRead = ['partITestDatabase/',fileName];
-    identifiedSong = main(1,toRead);% Identified clip by Shazam
+    toRead = ['songDatabase/',fileName];
+    identifiedSong = main(1,toRead, hashTable);% Identified clip by Shazam
     
     % For correct
     if (strcmp(char(identifiedSong), fileName)) 

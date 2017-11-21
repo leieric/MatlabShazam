@@ -8,17 +8,17 @@ function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)
     [S, F, T] = spectrogram(ch1, 512, 256, 512, 8000);
     log_S = log10(abs(S) + 1);
 
-    figure
-    imagesc(T, F, 20*log10(abs(S)));
-    axis xy;
-    xlabel('Time (s)')
-    ylabel('Frequency (Hz)')
-    title('Spectrogram')
-
-    colormap jet
-    c = colorbar;
-    set(c);
-    ylabel(c, 'Power (dB)', 'FontSize', 14);
+%     figure
+%     imagesc(T, F, 20*log10(abs(S)));
+%     axis xy;
+%     xlabel('Time (s)')
+%     ylabel('Frequency (Hz)')
+%     title('Spectrogram')
+% 
+%     colormap jet
+%     c = colorbar;
+%     set(c);
+%     ylabel(c, 'Power (dB)', 'FontSize', 14);
 
     %Step 3 Feature Extraction
 
@@ -67,10 +67,10 @@ function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)
         submatrix = localPeak((y1:y2), (x1:x2));
         [subI, subJ] = find(submatrix, 3);
         for j = 1:length(subI)
-            table = [table; I2(i) subI(j) J(i) subJ(j)+deltaTL];
+            table = [table; I2(i) I2(i)-deltaF+subI(j)-1 J(i) subJ(j)+deltaTL-1];
         end
     end
-    size(table)
+    size(table);
 end
 
 

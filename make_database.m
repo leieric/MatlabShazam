@@ -12,5 +12,5 @@ function songNameTable = make_database(gs, deltaTL, deltaTU, deltaF)
         tempMatrix = [tempMatrix i*ones(length(tempMatrix), 1)];
         songNameTable = [songNameTable; tempMatrix];
     end
-    size(songNameTable)
+    size(songNameTable);
 end

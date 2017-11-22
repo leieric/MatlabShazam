@@ -1,4 +1,4 @@
-% Fall 2017 ECE 2200, Shazam Part I Test
+% Fall 2017 ECE 2200, Shelam Part I Test
 % Instruction:
 % The program will first ask you to write your NetIDs. Please enter in form
 % of [netID1]_[netID2]. 
@@ -13,6 +13,7 @@
 clear
 close all
 load('hashTable.mat', 'hashTable')
+load('songNameTable.mat', 'songNameTable')
 % Ask two NetIDs of Shazam project that is being tested
 prompt = 'What are the NetIDs? Please enter in form of: cw733_kjj34\n==> ';
 netId = input(prompt,'s');
@@ -35,7 +36,7 @@ matFiles = files.mat;
 for index = 1:50
     fileName = matFiles{index};% Name of the test clip
     toRead = ['songDatabase/',fileName];
-    identifiedSong = main(1,toRead, hashTable);% Identified clip by Shazam
+    identifiedSong = main(1,toRead, hashTable, songNameTable);% Identified clip by Shazam
     
     % For correct
     if (strcmp(char(identifiedSong), fileName)) 

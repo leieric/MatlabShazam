@@ -50,11 +50,11 @@ function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)
     %Step 4 Thresholding
     log_S = log_S.*localPeak;
     log_S = log_S(:);
-    totalPeaks = 30 * T(length(T));
+    totalPeaks = floor(30 * T(length(T)));
     [B, I1] = sort(log_S, 'descend');
-    log_S(I1((totalPeaks+1):end)) = 0;
+%     log_S(I1((totalPeaks+1):end)) = 0;
     localPeak(I1((totalPeaks+1):end)) = 0;
-    log_S = reshape(log_S, [length(log_S(:,1)), length(log_S(1,:))]); 
+%     log_S = reshape(log_S, [length(log_S(:,1)), length(log_S(1,:))]); 
 
     %Step 5 Constructing Table
     table = [];

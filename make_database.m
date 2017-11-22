@@ -18,7 +18,7 @@ function make_database(gs, deltaTL, deltaTU, deltaF)
             songName = num2str(songName);
         end
         songName = strcat(songName, '.mat');
-        songNameTable = [songNameTable; songName];
+        songNameTable{i} = songName;
     end
     hashTable = hash(songDatabase);
     save('hashTable.mat', 'hashTable', '-mat');

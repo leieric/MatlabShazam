@@ -1,17 +1,20 @@
-% Fall 2017 ECE 2200, Shelam Part I Test
+% Fall 2017 ECE 2200, Shazam Competition - Database test
 % Instruction:
 % The program will first ask you to write your NetIDs. Please enter in form
 % of [netID1]_[netID2]. 
-% Then the program will automatically run your Shazam program on 10 songs.
+% Then the program will automatically run your Shazam program on 20 clips.
 % As the program compltes, it will save the following parameters:
-% 1. credit: Part I test credit (max: 10, min: 0)
+% 1. credit: Database test credit (max: 0.6, min: 0.0)
 % 2. correct: names of a song that identified correctly
 % 3. incorrect: names of a song that identified incorrectly
-% 4. time: the time in second that the Shazam program took for running 10 songs.
-% You can load [netID1]_[netID2]_part_I_test.mat to check your
+% 4. noDecision: names of a song that identified as no-decision
+% 5. time: the time in second that the Shazam program took for running 20
+% clips.
+% You can load [netID1]_[netID2]_database_test.mat to check your
 % performance.
 clear
 close all
+
 % Ask two NetIDs of Shazam project that is being tested
 prompt = 'What are the NetIDs? Please enter in form of: cw733_kjj34\n==> ';
 netId = input(prompt,'s');
@@ -20,26 +23,31 @@ netId = input(prompt,'s');
 tic
 
 % Parameters
-testOption = 1;% Can ignore for now. It will be used for Shazam competition.
-credit = 0;% Part I test credit
+testOption = 1;% Database test option
+credit = 0;% Database test credit
 correct = {};% Array for saving names of a song that identified correctly
 incorrect = {};% Array for saving names of a song that identified incorrectly
+noDecision = {};% Array for saving names of a song that identified as no-decision
 
-% Read files in directory "clipGaussian/"
-files = what('songDatabase');
+% Read files in directory "clipHighNoise/"
+files = what('clipHighNoise');
 matFiles = files.mat;
 
 % Perform Shazam on 20 test clips
-% for index = 1:length(matFiles)
-for index = 1:50
+for index = 1:length(matFiles)
     fileName = matFiles{index};% Name of the test clip
-    toRead = ['songDatabase/',fileName];
-    identifiedSong = main(1,toRead);% Identified clip by Shazam
+    toRead = ['clipHighNoise/',fileName];
+    
+    identifiedSong = main(testOption,toRead);% Identified clip by Shazam
     
     % For correct
     if (strcmp(char(identifiedSong), fileName)) 
         credit = credit + 1;
         correct = [correct,fileName];
+    % For no-decision
+    elseif (strcmp(char(identifiedSong),'no-decision'))
+        credit = credit + 0.5;
+        noDecision = [noDecision,fileName];
     % For incorrect
     else 
         credit = credit + 0;
@@ -48,9 +56,10 @@ for index = 1:50
 end
 
 % Calculate credit
-toSaveMat = [netId,'_Part_I_test.mat'];
+credit = 0.6 * (credit/length(matFiles)); % max: 0.6, min: 0
+toSaveMat = [netId,'_database_test.mat'];
 
 % End measuing time
 time = toc; % Unit in second
 
-save(toSaveMat,'credit','correct','incorrect','time');
+save(toSaveMat,'credit','correct','incorrect','noDecision','time');

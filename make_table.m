@@ -1,11 +1,18 @@
-function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)     
+function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)  
+    
     %Step 1 Preprocessing
     load(songName, '-mat');
     ch1 = y(:,1);
     ch1 = resample(ch1, 8000, 44100);
+    
+    d = designfilt('lowpassiir','FilterOrder',8, ...
+         'PassbandFrequency',10e3,'PassbandRipple',0.2, ...
+         'SampleRate',45e3);
+    t = filter(d,ch1);
+    
     % length(ch1)
     %Step 2 Spectrogram
-    [S, F, T] = spectrogram(ch1, 512, 256, 512, 8000);
+    [S, F, T] = spectrogram(t, 512, 256, 512, 8000);
     log_S = log10(abs(S) + 1);
 
 %     figure

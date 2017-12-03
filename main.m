@@ -10,7 +10,7 @@ function songName = main(testOption, clipName)
         Fs=44100;
         bitsPerSample=24;
         channel=1;
-        recordTime=15;
+        recordTime=8;
         
         recorder = audiorecorder(Fs,bitsPerSample,channel); % Declare recorder variable with some defined properties
         recordblocking(recorder,recordTime);                % Record audio for the amount of "recordTime"

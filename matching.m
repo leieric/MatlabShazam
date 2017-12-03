@@ -13,6 +13,15 @@ function songName = matching(testOption, clip, hashTable, songNameTable, gs, del
     modeT0 = mode(matchMatrix(:,1));
     answer = matchMatrix(:,1) == modeT0;
     findMode = matchMatrix(answer, 2);
-    songIndex = mode(findMode);
-    songName = songNameTable(songIndex);
+    [songIndex, freq] = mode(findMode);
+    
+    tabulate(findMode)
+    freq/length(findMode)
+    
+    % Confidence testing
+    if freq/length(findMode) > 0.5
+        songName = songNameTable(songIndex);
+    else
+        songName = 'no-decision';
+    end
 end

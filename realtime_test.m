@@ -38,8 +38,7 @@ files = what('clipRealTime');
 matFiles = files.mat;
 
 % Perform Shazam on 20 test clips
-%for index = 1:length(matFiles)
-for index = 1:3
+for index = 1:3%length(matFiles)
     
     
 	% Read test clip
@@ -71,7 +70,7 @@ for index = 1:3
 	    % For incorrect
 	    else 
 	        credit = credit + 0;
-	        %incorrect = [incorrect,fileName];
+	        incorrect = [incorrect,fileName];
 	    end 
 	end
 end

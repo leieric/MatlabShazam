@@ -11,6 +11,7 @@ function table = make_table(testOption, songName, gs, deltaTL, deltaTU, deltaF)
          'PassbandFrequency',2.2e3,'PassbandRipple',0.2, ...
          'SampleRate',8e3);
     t = filter(d,songName);
+%     t = filter(d, awgn(songName, 37));
 %     t = songName;
     % length(ch1)
     %Step 2 Spectrogram

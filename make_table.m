@@ -1,31 +1,33 @@
-function table = make_table(songName, gs, deltaTL, deltaTU, deltaF)  
+function table = make_table(testOption, songName, gs, deltaTL, deltaTU, deltaF)  
     
     %Step 1 Preprocessing
+    if testOption == 1
     load(songName, '-mat');
-    ch1 = y(:,1);
-    ch1 = resample(ch1, 8000, 44100);
+    songName = y(:,1);
+    end
     
+    songName = resample(songName, 8000, 44100);
     d = designfilt('lowpassiir','FilterOrder',8, ...
-         'PassbandFrequency',10e3,'PassbandRipple',0.2, ...
-         'SampleRate',45e3);
-    t = filter(d,ch1);
-    
+         'PassbandFrequency',2.2e3,'PassbandRipple',0.2, ...
+         'SampleRate',8e3);
+    t = filter(d,songName);
+%     t = songName;
     % length(ch1)
     %Step 2 Spectrogram
     [S, F, T] = spectrogram(t, 512, 256, 512, 8000);
     log_S = log10(abs(S) + 1);
 
-%     figure
-%     imagesc(T, F, 20*log10(abs(S)));
-%     axis xy;
-%     xlabel('Time (s)')
-%     ylabel('Frequency (Hz)')
-%     title('Spectrogram')
-% 
-%     colormap jet
-%     c = colorbar;
-%     set(c);
-%     ylabel(c, 'Power (dB)', 'FontSize', 14);
+    figure
+    imagesc(T, F, 20*log10(abs(S)));
+    axis xy;
+    xlabel('Time (s)')
+    ylabel('Frequency (Hz)')
+    title('Spectrogram')
+
+    colormap jet
+    c = colorbar;
+    set(c);
+    ylabel(c, 'Power (dB)', 'FontSize', 14);
 
     %Step 3 Feature Extraction
 
